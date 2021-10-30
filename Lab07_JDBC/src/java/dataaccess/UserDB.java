@@ -91,6 +91,7 @@ public List<User> getAll() throws Exception {
             ps.setString(3, user.getFirstName());
             ps.setString(4, user.getLastName());
             ps.setString(5, user.getPassword());
+            ps.setString(6, String.valueOf(user.getRole()));
             ps.executeUpdate();
         } finally {
             DBUtil.closePreparedStatement(ps);
@@ -102,24 +103,25 @@ public List<User> getAll() throws Exception {
         ConnectionPool cp = ConnectionPool.getInstance();
         Connection con = cp.getConnection();
         PreparedStatement ps = null;
-        String sql = "UPDATE user SET active=?, first_name=?, last_name=?, password=?,role=? WHERE email=?";
+        String sql = "UPDATE user SET active=?, first_name=?, last_name=?,role=? WHERE email=?";
  
         try {
+            System.out.println(user);
             ps = con.prepareStatement(sql);
             ps.setString(1, String.valueOf(user.getActive()));
             ps.setString(2, user.getFirstName());
             ps.setString(3, user.getLastName());
-            ps.setString(4, user.getPassword());
-            ps.setString(5, String.valueOf(user.getRole()));
-            ps.setString(6, user.getEmail());
+            ps.setString(4, String.valueOf(user.getRole()));
+            ps.setString(5, user.getEmail());
             ps.executeUpdate();
+            System.out.println("SQL UPDATE RAN");
         } finally {
             DBUtil.closePreparedStatement(ps);
             cp.freeConnection(con);
         }
     }
 
-    public void delete(User user) throws Exception {
+    public void delete(String email) throws Exception {
         ConnectionPool cp = ConnectionPool.getInstance();
         Connection con = cp.getConnection();
         PreparedStatement ps = null;
@@ -127,7 +129,7 @@ public List<User> getAll() throws Exception {
         
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, user.getEmail());
+            ps.setString(1, email);
             ps.executeUpdate();
         } finally {
             DBUtil.closePreparedStatement(ps);

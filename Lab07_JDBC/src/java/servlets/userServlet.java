@@ -64,27 +64,34 @@ public class userServlet extends HttpServlet {
             String lastName = request.getParameter("user_last_name");
             int active = Integer.parseInt(request.getParameter("user_active"));
             int role = Integer.parseInt(request.getParameter("user_role"));
-            System.out.println("Info IS: " + email + firstName + lastName + active + role);
+            String password = request.getParameter("user_password");
             switch (action) {
+                
                 case "edit": 
-    
                     request.setAttribute("last_name_edit", lastName);
                     request.setAttribute("first_name_edit", firstName);
                     request.setAttribute("active_edit", active);
                     request.setAttribute("role_edit", role);
-                    
-
+                    request.setAttribute("user_email_edit", email);
                     break;
-//                case "delete":
-//                    userService.update(Integer.parseInt(noteId), title, contents, email);
-//                    break;
+                case "delete":
+                    System.out.println("delete info" + email + active + role);
+                    userService.delete(email);
+                    break;
                 case "update":
-                    
-                    userService.update(active, firstName, lastName,role,email );
+                    String emailUpdate = request.getParameter("user_email_edit");
+                    System.out.println("email is: " + emailUpdate);
+                    String firstNameUpdate = request.getParameter("first_name_edit");
+                    String lastNameUpdate = request.getParameter("last_name_edit");
+                    int activeUpdate = Integer.parseInt(request.getParameter("active_edit"));
+                    int roleUpdate = Integer.parseInt(request.getParameter("role_edit"));
+
+                    userService.update(activeUpdate, firstNameUpdate, lastNameUpdate,roleUpdate,emailUpdate);
+                    System.out.println("ran update");
                     break;
-//                case "add":
-//                    userService.delete(Integer.parseInt(noteId));  
-//                    break;
+                case "add":
+                    userService.insert(email, active, firstName, lastName, password,role);  
+                    break;
             }
         } catch (Exception ex) {
             Logger.getLogger(userServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -99,12 +106,13 @@ public class userServlet extends HttpServlet {
             List<User> users = userService.getAll();
             request.setAttribute("users", users);
             getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
+            return;
         } catch (Exception ex) {
             
             request.setAttribute("message", "error");
         }
 
-        getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
+       
     }
 
 }

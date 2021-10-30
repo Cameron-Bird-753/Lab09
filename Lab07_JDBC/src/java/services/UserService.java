@@ -22,8 +22,8 @@ public class UserService {
     
        public User getUser(String email) throws Exception {
         UserDB userdb = new UserDB();
-        User note = userdb.getUser(email);
-        return note;
+        User user = userdb.getUser(email);
+        return user;
     }
 
     
@@ -33,29 +33,25 @@ public class UserService {
         noteDB.insert(newUser);
     }
     
-    public void update(int active, String firstName, String lastName, String password, int role, String email) throws Exception {
-        UserDB userdb = new UserDB();
-        User user = userdb.getUser(email);
-        user.setActive(active);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setPassword(password);
-        user.setRole(role);
-        userdb.update(user);
-    }
+//    public void update(int active, String firstName, String lastName, String password, int role, String email) throws Exception {
+//        UserDB userdb = new UserDB();
+//        User user = userdb.getUser(email);
+//        user.setActive(active);
+//        user.setFirstName(firstName);
+//        user.setLastName(lastName);
+//        user.setPassword(password);
+//        user.setRole(role);
+//        userdb.update(user);
+//    }
     //NO PASSWORD
     public void update(int active, String firstName, String lastName, int role, String email) throws Exception {
+        User user = new User( active,  firstName,  lastName,  role, email);
         UserDB userdb = new UserDB();
-        User user = userdb.getUser(email);
-        user.setActive(active);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setRole(role);
         userdb.update(user);
     }
     
     public void delete(String email) throws Exception {
         UserDB userdb = new UserDB();
-        userdb.delete(getUser(email));
+        userdb.delete(email);
     }
 }

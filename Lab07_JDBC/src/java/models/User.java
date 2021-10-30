@@ -25,6 +25,14 @@ public class User {
         this.email= email;
         this.active = active;
     }
+    
+    public User(int active, String firstName, String lastName, int role, String email){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+        this.active = active;
+        this.email= email;
+    }
        
 
     public String getFirstName() {
@@ -69,6 +77,11 @@ public class User {
 
     public void setActive(int active) {
         this.active = active;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "firstName=" + firstName + ", lastName=" + lastName + ", password=" + password + ", role=" + role + ", email=" + email + ", active=" + active + '}';
     }
     
     

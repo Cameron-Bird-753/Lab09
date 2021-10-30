@@ -14,9 +14,40 @@
     </head>
     <body>
         <h1>User Dashboard</h1>
-        <form metod="POST" action="insert">
-            
-        </form>
+            <h2>Add User</h2>
+            <form action="users" method="post">
+                <div>
+                    <label>First Name:</label> 
+                    <input type="text" name="user_first_name">
+                </div>   
+                <div>
+                    <label>Last Name:</label>  
+                    <input type="text" name="user_last_name">
+                </div>
+                <div>
+                    <label>Email:</label>  
+                    <input type="text" name="user_email">
+                </div>  
+                <div>
+                    <label>Password:</label>  
+                    <input type="text" name="user_password">
+                </div>   
+                <div>
+                    <label>Status:</label>     
+                    <select name="user_active" >
+                    <option selected="selected" value="1">Active</option>
+                    <option value="2">Inactive</option>
+                    </select>
+                <div>
+                <label>Role:</label> 
+                    <select name="user_role" >
+                    <option selected="selected" value="1">System Admin</option>
+                    <option value="2">Regular User</option>
+                    <option value="3">Company Admin</option>
+                </div>
+                <input type="hidden" name="action" value="add">
+                <input type="submit" value="Add & Save">
+            </form>
         <table>
             <c:forEach items="${users}" var="user">
                 <tr>
@@ -36,13 +67,18 @@
                         </form></td>
                     <td><form  action="users" method="post">
                         <input type="submit" name="firstName" value="delete"> 
+                        <input type="hidden" name="user_email" value="${user.email}"/>
+                        <input type="hidden" name="user_first_name" value="${user.firstName}"/>
+                        <input type="hidden" name="user_last_name" value="${user.lastName}"/>
+                        <input type="hidden" name="user_active" value="${user.active}"/>
+                        <input type="hidden" name="user_role" value="${user.role}"/>
                         <input type="hidden" name="action" value="delete"/>
                         </form></td>
                 </tr>
             </c:forEach>
         </table>
             <h2>Edit User</h2>
-            <form action="update" method="post">
+            <form action="users" method="post">
                 <div>
                     <label>First Name:</label> 
                     <input type="text" name="first_name_edit" value="${first_name_edit}">
@@ -56,15 +92,15 @@
                     <label>Status:</label>
                     <c:choose>
                         <c:when  test="${active_edit == '1'}">
-                            <select name="status_edit" >
-                            <option selected="selected" value="active">Active</option>
-                            <option value="Inactive">Inactive</option>
+                            <select name="active_edit" >
+                            <option selected="selected" value="1">Active</option>
+                            <option value="2">Inactive</option>
                             </select>
                         </c:when>
                         <c:otherwise>
-                            <select name="status_edit" >
-                            <option value="active">Active</option>
-                            <option selected="selected"value="Inactive">Inactive</option>
+                            <select name="active_edit" >
+                            <option value="1">Active</option>
+                            <option selected="selected"value="2">Inactive</option>
                             </select>
                         </c:otherwise>
                     </c:choose>
@@ -73,21 +109,21 @@
                 <label>Role:</label> 
                     <c:choose>
                         <c:when  test="${role_edit == '1'}">
-                            <select name="status_edit" >
+                            <select name="role_edit" >
                             <option selected="selected" value="1">System Admin</option>
                             <option value="2">Regular User</option>
                             <option value="3">Company Admin</option>
                             </select>
                         </c:when>
                         <c:when  test="${role_edit == '2'}">
-                            <select name="status_edit" >
+                            <select name="role_edit" >
                             <option value="1">System Admin</option>
                             <option selected="selected" value="2">Regular User</option>
                             <option value="3">Company Admin</option>
                             </select>
                         </c:when>
                         <c:otherwise>
-                            <select name="status_edit" >
+                            <select name="role_edit" >
                             <option value="1">System Admin</option>
                             <option  value="2">Regular User</option>
                             <option selected="selected"value="3">Company Admin</option>
@@ -95,12 +131,9 @@
                         </c:otherwise>
                     </c:choose>
                 </div>
-                
-                <input type="hidden" name="user_email" value="${user.email}">
+                <input type="hidden" name="user_email_edit" value="${user_email_edit}">
                 <input type="hidden" name="action" value="update">
                 <input type="submit" value="Update & Save">
-            </form>
-                
-                
+            </form>   
     </body>
 </html>
