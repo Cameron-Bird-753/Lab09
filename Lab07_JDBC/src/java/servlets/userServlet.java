@@ -51,19 +51,18 @@ public class userServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         UserService userService = new UserService();
-
-       
         String action = request.getParameter("action");
-          
-            System.out.println("ACTION IS: " + action);
+        System.out.println("ACTION IS: " + action);
       
 
         try {
+            
+           
             String email = request.getParameter("user_email");
             String firstName = request.getParameter("user_first_name");
             String lastName = request.getParameter("user_last_name");
-            int active = Integer.parseInt(request.getParameter("user_active"));
-            int role = Integer.parseInt(request.getParameter("user_role"));
+            String active = request.getParameter("user_active");
+            String role = request.getParameter("user_role");
             String password = request.getParameter("user_password");
             switch (action) {
                 
@@ -75,12 +74,12 @@ public class userServlet extends HttpServlet {
                     request.setAttribute("user_email_edit", email);
                     break;
                 case "delete":
-                    System.out.println("delete info" + email + active + role);
                     userService.delete(email);
                     break;
                 case "update":
                     String emailUpdate = request.getParameter("user_email_edit");
                     System.out.println("email is: " + emailUpdate);
+                    
                     String firstNameUpdate = request.getParameter("first_name_edit");
                     String lastNameUpdate = request.getParameter("last_name_edit");
                     int activeUpdate = Integer.parseInt(request.getParameter("active_edit"));
@@ -90,7 +89,9 @@ public class userServlet extends HttpServlet {
                     System.out.println("ran update");
                     break;
                 case "add":
-                    userService.insert(email, active, firstName, lastName, password,role);  
+                    int activeNo = Integer.parseInt(active);
+                    int roleNo = Integer.parseInt(role);
+                    userService.insert(email, activeNo, firstName, lastName, password,roleNo);  
                     break;
             }
         } catch (Exception ex) {
