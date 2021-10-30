@@ -10,5 +10,68 @@ package models;
  * @author tweet
  */
 public class User {
+    private String firstName;
+    private String lastName;
+    private String password;
+    private int role;
+    private String email;
+    private int active;
+    
+    public User(String email, int active, String firstName, String lastName, String password, int role ){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.role = role;
+        this.email= email;
+        this.active = active;
+    }
+       
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+    
+    
+    
     
 }

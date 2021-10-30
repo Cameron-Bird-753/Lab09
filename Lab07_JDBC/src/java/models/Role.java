@@ -10,5 +10,22 @@ package models;
  * @author tweet
  */
 public class Role {
+    private String description;
+    private int roleNumber;
     
+    public String getDescription() {
+        return description;
+    }
+
+    public int getRoleNumber() {
+        return roleNumber;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Role(String name) {
+        this.description = name;
+    }
 }
