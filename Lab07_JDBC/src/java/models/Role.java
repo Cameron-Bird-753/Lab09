@@ -11,21 +11,18 @@ package models;
  */
 public class Role {
     private String description;
-    private int roleNumber;
+    private int roleID;
+
+    public Role(int roleID, String description) {
+        this.roleID = roleID;
+        this.description = description;
+    }
     
     public String getDescription() {
         return description;
     }
 
-    public int getRoleNumber() {
-        return roleNumber;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Role(String name) {
-        this.description = name;
+    public int getRoleID() {
+        return roleID;
     }
 }

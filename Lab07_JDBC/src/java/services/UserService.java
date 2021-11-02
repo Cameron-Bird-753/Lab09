@@ -8,6 +8,7 @@ package services;
 import java.util.List;
 import models.User;
 import dataaccess.UserDB;
+import models.Role;
 /**
  *
  * @author tweet
@@ -27,24 +28,17 @@ public class UserService {
     }
 
     
-    public void insert(String email, int active, String firstName, String lastName, String password, int role) throws Exception {
+    public void insert(String email, int active, String firstName, String lastName, String password, int userRole) throws Exception {
+        RoleService roleService = new RoleService();
+        Role role = roleService.getRole(userRole);
         User newUser = new User(email, active, firstName, lastName, password,role);
         UserDB noteDB = new UserDB();
         noteDB.insert(newUser);
     }
     
-//    public void update(int active, String firstName, String lastName, String password, int role, String email) throws Exception {
-//        UserDB userdb = new UserDB();
-//        User user = userdb.getUser(email);
-//        user.setActive(active);
-//        user.setFirstName(firstName);
-//        user.setLastName(lastName);
-//        user.setPassword(password);
-//        user.setRole(role);
-//        userdb.update(user);
-//    }
-    //NO PASSWORD
-    public void update(int active, String firstName, String lastName, int role, String email) throws Exception {
+    public void update(int active, String firstName, String lastName, int userRole, String email) throws Exception {
+        RoleService roleService = new RoleService();
+        Role role = roleService.getRole(userRole);
         User user = new User( active,  firstName,  lastName,  role, email);
         UserDB userdb = new UserDB();
         userdb.update(user);

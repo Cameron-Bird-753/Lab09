@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import models.Role;
 import models.User;
+import services.RoleService;
 import services.UserService;
 
 /**
@@ -29,12 +31,14 @@ public class userServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
              UserService userService = new UserService();
+             RoleService roleService = new RoleService();
 
         try {
             HttpSession session = request.getSession();
             List<User> users = userService.getAll();
-            System.out.println("users" + users.get(0));
+            List<Role> roles = roleService.getAll();
             request.setAttribute("users", users);
+            request.setAttribute("roles", roles);
             getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
             return;
         } catch (Exception ex) {
@@ -50,14 +54,14 @@ public class userServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
+        RoleService roleService = new RoleService();
         UserService userService = new UserService();
+        
         String action = request.getParameter("action");
-        System.out.println("ACTION IS: " + action);
-      
 
         try {
+            List<Role> roles = roleService.getAll();
             
-           
             String email = request.getParameter("user_email");
             String firstName = request.getParameter("user_first_name");
             String lastName = request.getParameter("user_last_name");
@@ -67,6 +71,7 @@ public class userServlet extends HttpServlet {
             switch (action) {
                 
                 case "edit": 
+                    request.setAttribute("roles_edit", roles);
                     request.setAttribute("last_name_edit", lastName);
                     request.setAttribute("first_name_edit", firstName);
                     request.setAttribute("active_edit", active);
@@ -84,7 +89,8 @@ public class userServlet extends HttpServlet {
                     String lastNameUpdate = request.getParameter("last_name_edit");
                     int activeUpdate = Integer.parseInt(request.getParameter("active_edit"));
                     int roleUpdate = Integer.parseInt(request.getParameter("role_edit"));
-
+                    System.out.println("Info to update is: " + firstNameUpdate + emailUpdate + roleUpdate);
+                    
                     userService.update(activeUpdate, firstNameUpdate, lastNameUpdate,roleUpdate,emailUpdate);
                     System.out.println("ran update");
                     break;
@@ -97,23 +103,15 @@ public class userServlet extends HttpServlet {
         } catch (Exception ex) {
             Logger.getLogger(userServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-//            request.setAttribute("message", action);
-//        } catch (Exception ex) {
-//            Logger.getLogger(NoteServlet.class.getName()).log(Level.SEVERE, null, ex);
-//            request.setAttribute("message", "error");
-//        }
-//
+
         try {
             List<User> users = userService.getAll();
             request.setAttribute("users", users);
+
             getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
             return;
         } catch (Exception ex) {
-            
             request.setAttribute("message", "error");
         }
-
-       
     }
-
 }
