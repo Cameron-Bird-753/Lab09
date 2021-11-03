@@ -18,13 +18,37 @@
             <h2>User List</h2>
             <table>
                 <div>
+                    <tr>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                    </tr>
                 <c:forEach items="${users}" var="user">
                     <tr>
                         <td>${user.firstName}</td>
                         <td>${user.lastName}</td>
                         <td>${user.email}</td>
-                        <td>${user.role}</td>
-                        <td>${user.active}</td>
+                        <c:choose>
+                            <c:when test="${user.role == '1'}">
+                              <td>System admin </td>   
+                            </c:when>
+                            <c:when test="${user.role == '2'}">
+                              <td>Regular user </td> 
+                            </c:when>
+                            <c:otherwise>
+                              <td>Company Admin </td> 
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${user.active == '1'}">
+                            <td>Active</td>
+                            </c:when>
+                            <c:when test="${user.active == '2'}">
+                                <td>Inactive</td>
+                            </c:when>
+                        </c:choose>
                         <td><form  action="users" method="post">
                             <input type="submit" name="firstName" value="edit"> 
                             <input type="hidden" name="user_email" value="${user.email}"/>

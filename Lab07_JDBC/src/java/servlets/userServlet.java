@@ -61,7 +61,6 @@ public class userServlet extends HttpServlet {
 
         try {
             List<Role> roles = roleService.getAll();
-            
             String email = request.getParameter("user_email");
             String firstName = request.getParameter("user_first_name");
             String lastName = request.getParameter("user_last_name");
@@ -90,7 +89,6 @@ public class userServlet extends HttpServlet {
                     int activeUpdate = Integer.parseInt(request.getParameter("active_edit"));
                     int roleUpdate = Integer.parseInt(request.getParameter("role_edit"));
                     System.out.println("Info to update is: " + firstNameUpdate + emailUpdate + roleUpdate);
-                    
                     userService.update(activeUpdate, firstNameUpdate, lastNameUpdate,roleUpdate,emailUpdate);
                     System.out.println("ran update");
                     break;
@@ -106,8 +104,9 @@ public class userServlet extends HttpServlet {
 
         try {
             List<User> users = userService.getAll();
+            List<Role> roles = roleService.getAll();
             request.setAttribute("users", users);
-
+            request.setAttribute("roles", roles);
             getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
             return;
         } catch (Exception ex) {
