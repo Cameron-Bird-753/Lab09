@@ -53,7 +53,8 @@ public class UserService {
     }
     
     public void delete(String email) throws Exception {
-//        UserDB userdb = new UserDB();
-//        userdb.delete(email);
+          UserDB userdb = new UserDB();
+          User user = userdb.getUser(email);
+          userdb.delete(user);
     }
 }

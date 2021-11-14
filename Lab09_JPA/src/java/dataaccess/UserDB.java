@@ -77,10 +77,24 @@ public List<User> getAll() throws Exception {
         }
     }
 
-    public void delete(String email) throws Exception {
+    public void delete(User user) throws Exception {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        
+        try {
+       
+            trans.begin();
+            em.remove(em.merge(user));
+       
+            trans.commit();
+        } catch (Exception ex) {
+            trans.rollback();
+        } finally {
+            em.close();
+        }
+    }
+}
 
-}
-}
 
 
 
