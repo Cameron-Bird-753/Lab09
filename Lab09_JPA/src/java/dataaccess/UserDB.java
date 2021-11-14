@@ -28,7 +28,6 @@ public List<User> getAll() throws Exception {
         TypedQuery<User> query = em.createNamedQuery("User.findAll", User.class);
         try {
             List<User> users = query.getResultList();
-            System.out.println(users);
             return users;
         } finally {
             em.close();
@@ -40,6 +39,7 @@ public List<User> getAll() throws Exception {
         
         try {
             User user = em.find(User.class, emailSearch);
+            System.out.println("USER ACCESS, RETURN USER IS :" + user);
             return user;
         } finally { 
             em.close();
@@ -63,7 +63,18 @@ public List<User> getAll() throws Exception {
     }
 
     public void update(User user) throws Exception {
-
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        
+        try {
+            trans.begin();
+            em.merge(user);
+            trans.commit();
+        } catch (Exception ex) {
+            trans.rollback();
+        } finally {
+            em.close();
+        }
     }
 
     public void delete(String email) throws Exception {

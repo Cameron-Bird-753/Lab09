@@ -30,25 +30,7 @@
                         <td>${user.firstName}</td>
                         <td>${user.lastName}</td>
                         <td>${user.email}</td>
-                        <c:choose>
-                            <c:when test="${user.role == '1'}">
-                              <td>System admin </td>   
-                            </c:when>
-                            <c:when test="${user.role == '2'}">
-                              <td>Regular user </td> 
-                            </c:when>
-                            <c:otherwise>
-                              <td>Company Admin </td> 
-                            </c:otherwise>
-                        </c:choose>
-                        <c:choose>
-                            <c:when test="${user.active == '1'}">
-                            <td>Active</td>
-                            </c:when>
-                            <c:when test="${user.active == '2'}">
-                                <td>Inactive</td>
-                            </c:when>
-                        </c:choose>
+                        <td>${user.role.roleName}</td>
                         <td><form  action="users" method="post">
                             <input type="submit" name="firstName" value="edit"> 
                             <input type="hidden" name="user_email" value="${user.email}"/>
@@ -64,7 +46,7 @@
                             <input type="hidden" name="user_first_name" value="${user.firstName}"/>
                             <input type="hidden" name="user_last_name" value="${user.lastName}"/>
                             <input type="hidden" name="user_active" value="${user.active}"/>
-                            <input type="hidden" name="user_role" value="${user.role}"/>
+                            <input type="hidden" name="user_role" value="${user.role.roleName}"/>
                             <input type="hidden" name="action" value="delete"/>
                             </form></td>
                     </tr>
@@ -144,18 +126,11 @@
                 <div>
                     <label>Role:</label> 
                         <select name="role_edit" >
-                        <c:forEach items="${roles_edit}" var="role">                
-                            <c:choose>
-                                <c:when  test="${role_edit == role.roleId}">
-                                    <option selected="selected" value="${role.roleId}">${role.roleName}</option>
-                                </c:when> 
-                                <c:otherwise>
-                                    <option  value="${role.roleId}">${role.roleName}</option>   
-                                </c:otherwise> 
-                            </c:choose>      
+                        <c:forEach items="${roles}" var="role">
+                        <option selected="selected" value="${role.roleId}">${role.roleName}</option>
                         </c:forEach>
-                        </select>            
-                 </div>
+                        </select>
+                </div> 
                 <input type="hidden" name="user_email_edit" value="${user_email_edit}">
                 <input type="hidden" name="action" value="update">
                 <div>

@@ -39,11 +39,17 @@ public class UserService {
     }
     
     public void update(int active, String firstName, String lastName, int userRole, String email) throws Exception {
-//        RoleService roleService = new RoleService();
-//        Role role = roleService.getRole(userRole);
-//        User user = new User( active,  firstName,  lastName,  role, email);
-//        UserDB userdb = new UserDB();
-//        userdb.update(user);
+          UserDB userdb = new UserDB();
+          RoleDB roleDB = new RoleDB();
+          User user = userdb.getUser(email);
+          
+          user.setActive(active);
+          user.setFirstName(firstName);
+          user.setLastName(lastName);
+          Role role = roleDB.getRole(userRole);
+          user.setRole(role);
+          userdb.update(user);
+
     }
     
     public void delete(String email) throws Exception {

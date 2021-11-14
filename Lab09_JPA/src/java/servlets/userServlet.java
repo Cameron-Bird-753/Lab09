@@ -65,16 +65,17 @@ public class userServlet extends HttpServlet {
             String firstName = request.getParameter("user_first_name");
             String lastName = request.getParameter("user_last_name");
             String active = request.getParameter("user_active");
-            String role = request.getParameter("user_role");
+            String userToEditrole = request.getParameter("user_role");
             String password = request.getParameter("user_password");
             switch (action) {
                 
                 case "edit": 
-                    request.setAttribute("roles_edit", roles);
+                    
+                    request.setAttribute("roles", roles);
                     request.setAttribute("last_name_edit", lastName);
                     request.setAttribute("first_name_edit", firstName);
                     request.setAttribute("active_edit", active);
-                    request.setAttribute("role_edit", role);
+                    request.setAttribute("role_edit", userToEditrole);
                     request.setAttribute("user_email_edit", email);
                     break;
                 case "delete":
@@ -85,12 +86,12 @@ public class userServlet extends HttpServlet {
                     String firstNameUpdate = request.getParameter("first_name_edit");
                     String lastNameUpdate = request.getParameter("last_name_edit");
                     int activeUpdate = Integer.parseInt(request.getParameter("active_edit"));
-                    int roleUpdate = Integer.parseInt(request.getParameter("role_edit"));
+                    Integer roleUpdate = Integer.parseInt(request.getParameter("role_edit"));
                     userService.update(activeUpdate, firstNameUpdate, lastNameUpdate,roleUpdate,emailUpdate);
                     break;
                 case "add":
                     int activeNo = Integer.parseInt(active);
-                    int roleNo = Integer.parseInt(role);
+                    int roleNo = Integer.parseInt(userToEditrole);
                     userService.insert(email, activeNo, firstName, lastName, password,roleNo);  
                     break;
             }

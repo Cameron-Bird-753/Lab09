@@ -28,7 +28,7 @@ public List<Role> getAll() throws Exception {
         TypedQuery<Role> query = em.createNamedQuery("Role.findAll", Role.class);
         try {
             List<Role> roles = query.getResultList();
-            System.out.println(roles);
+   
             return roles;
         } finally {
             em.close();
@@ -39,6 +39,7 @@ public Role getRole(int id) throws Exception {
         
         try {
             Role role = em.find(Role.class, id);
+            System.out.println("ROLE ACCESS, RETURN ROLE IS :" + role);
             return role;
         } finally { 
             em.close();
